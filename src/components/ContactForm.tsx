@@ -23,43 +23,43 @@ function Dropdown({ options, placeholder, value, onChange }: { options: string[]
 
   useEffect(() => {
     if (!open) return;
-    const handler = (e: MouseEvent | TouchEvent) => {
+    const close = (e: Event) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-    document.addEventListener("mousedown", handler);
-    document.addEventListener("touchstart", handler, { passive: true });
-    return () => {
-      document.removeEventListener("mousedown", handler);
-      document.removeEventListener("touchstart", handler);
-    };
+    // Use click for outside detection — fires after touchend, avoids race conditions
+    document.addEventListener("click", close, true);
+    return () => document.removeEventListener("click", close, true);
   }, [open]);
 
   return (
     <div ref={ref} className="relative">
-      <button
-        type="button"
-        onPointerUp={(e) => { e.preventDefault(); setOpen(!open); }}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setOpen(!open)}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setOpen(!open); }}
         className={`w-full h-12 sm:h-11 px-4 rounded-xl border text-left text-sm flex items-center justify-between transition-colors cursor-pointer select-none ${
           open ? "border-amber-400 ring-1 ring-amber-400" : "border-zinc-200"
         } ${value ? "text-zinc-900" : "text-zinc-400"}`}
       >
-        <span className="truncate">{value || placeholder}</span>
-        <ChevronDownIcon className={`w-4 h-4 text-zinc-400 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
-      </button>
+        <span className="truncate pointer-events-none">{value || placeholder}</span>
+        <ChevronDownIcon className={`w-4 h-4 text-zinc-400 shrink-0 transition-transform pointer-events-none ${open ? "rotate-180" : ""}`} />
+      </div>
 
       {open && (
         <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white border border-zinc-200 rounded-xl shadow-lg max-h-60 overflow-y-auto py-1">
           {options.map((opt) => (
-            <button
+            <div
               key={opt}
-              type="button"
-              onPointerUp={() => { onChange(opt); setOpen(false); }}
+              role="option"
+              aria-selected={value === opt}
+              onClick={() => { onChange(opt); setOpen(false); }}
               className={`w-full text-left px-4 py-3 sm:py-2.5 text-sm transition-colors cursor-pointer select-none ${
                 value === opt ? "bg-amber-50 text-amber-600 font-medium" : "text-zinc-700 hover:bg-zinc-50 active:bg-zinc-100"
               }`}
             >
               {opt}
-            </button>
+            </div>
           ))}
         </div>
       )}

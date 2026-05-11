@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useRef, useCallback, useEffect } from "react";
 import {
   ComputerDesktopIcon,
   CpuChipIcon,
@@ -8,9 +5,8 @@ import {
   WrenchScrewdriverIcon,
   PaintBrushIcon,
   GlobeAltIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import MobileSlider from "./MobileSlider";
 
 const SERVICES = [
   {
@@ -85,32 +81,28 @@ const SERVICES = [
   },
 ];
 
+function Card({ svc }: { svc: (typeof SERVICES)[number] }) {
+  return (
+    <div className="rounded-2xl border border-zinc-200 p-5">
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`w-10 h-10 rounded-xl ${svc.color} flex items-center justify-center`}>
+          <svc.icon className="w-5 h-5" strokeWidth={1.5} />
+        </div>
+        <h3 className="text-base font-semibold text-zinc-900">{svc.title}</h3>
+      </div>
+      <div className="space-y-0">
+        {svc.brands.map((b, i) => (
+          <div key={i} className={`flex items-center gap-2.5 py-2 ${i !== svc.brands.length - 1 ? "border-b border-zinc-50" : ""}`}>
+            <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
+            <span className="text-sm text-zinc-500">{b}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Categories() {
-  const [active, setActive] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const scrollToSlide = useCallback((index: number) => {
-    if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    el.scrollTo({ left: index * el.offsetWidth, behavior: "smooth" });
-    setActive(index);
-  }, []);
-
-  const handleScroll = useCallback(() => {
-    if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    const index = Math.round(el.scrollLeft / el.offsetWidth);
-    setActive(index);
-  }, []);
-
   return (
     <section id="dich-vu" className="py-10 sm:py-14 bg-white">
       <div className="w-full max-w-[1300px] mx-auto px-5 sm:px-8">
@@ -123,82 +115,13 @@ export default function Categories() {
           </p>
         </div>
 
-        {/* Mobile: Slide carousel */}
-        <div className="sm:hidden">
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex snap-x snap-mandatory overflow-x-auto"
-            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-          >
-            {SERVICES.map((svc) => (
-              <div
-                key={svc.title}
-                className="snap-center shrink-0 w-full px-2"
-              >
-                <div className="rounded-2xl border border-zinc-200 p-5">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-10 h-10 rounded-xl ${svc.color} flex items-center justify-center`}>
-                      <svc.icon className="w-5 h-5" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-base font-semibold text-zinc-900">{svc.title}</h3>
-                  </div>
-                  <div className="space-y-0">
-                    {svc.brands.map((b, i) => (
-                      <div
-                        key={i}
-                        className={`flex items-center gap-2.5 py-2 ${i !== svc.brands.length - 1 ? "border-b border-zinc-50" : ""}`}
-                      >
-                        <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
-                        <span className="text-sm text-zinc-500">{b}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <MobileSlider>
+          {SERVICES.map((svc) => <Card key={svc.title} svc={svc} />)}
+        </MobileSlider>
 
-          {/* Navigation arrows + dots */}
-          <div className="flex items-center justify-center gap-3 mt-5">
-            <button
-              onClick={() => scrollToSlide(Math.max(0, active - 1))}
-              disabled={active === 0}
-              className="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center disabled:opacity-30 transition-all active:scale-90"
-              aria-label="Previous"
-            >
-              <ChevronLeftIcon className="w-4 h-4 text-zinc-600" strokeWidth={2.5} />
-            </button>
-            <div className="flex gap-1.5">
-              {SERVICES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => scrollToSlide(i)}
-                  className={`h-1.5 rounded-full transition-all duration-200 ${
-                    i === active ? "w-6 bg-amber-500" : "w-1.5 bg-zinc-200"
-                  }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
-            <button
-              onClick={() => scrollToSlide(Math.min(SERVICES.length - 1, active + 1))}
-              disabled={active === SERVICES.length - 1}
-              className="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center disabled:opacity-30 transition-all active:scale-90"
-              aria-label="Next"
-            >
-              <ChevronRightIcon className="w-4 h-4 text-zinc-600" strokeWidth={2.5} />
-            </button>
-          </div>
-        </div>
-
-        {/* Desktop: Grid layout */}
         <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {SERVICES.map((svc) => (
-            <div
-              key={svc.title}
-              className="rounded-2xl border border-zinc-200 hover:border-amber-200 transition-colors p-5 sm:p-6"
-            >
+            <div key={svc.title} className="rounded-2xl border border-zinc-200 hover:border-amber-200 transition-colors p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-10 h-10 rounded-xl ${svc.color} flex items-center justify-center`}>
                   <svc.icon className="w-5 h-5" strokeWidth={1.5} />
@@ -207,10 +130,7 @@ export default function Categories() {
               </div>
               <div className="space-y-0">
                 {svc.brands.map((b, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-center gap-2.5 py-2 ${i !== svc.brands.length - 1 ? "border-b border-zinc-50" : ""}`}
-                  >
+                  <div key={i} className={`flex items-center gap-2.5 py-2 ${i !== svc.brands.length - 1 ? "border-b border-zinc-50" : ""}`}>
                     <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
                     <span className="text-sm text-zinc-500">{b}</span>
                   </div>
