@@ -18,9 +18,9 @@ const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "LaptopWanry - Thu Mua Laptop Cũ Giá Cao",
-  image: "https://laptopwanry.com/img/THU-MUA-GIA-CAO-6.jpg",
-  "@id": "https://laptopwanry.com",
-  url: "https://laptopwanry.com",
+  image: "https://thulaptophcm.vn/img/THU-MUA-GIA-CAO-6.jpg",
+  "@id": "https://thulaptophcm.vn",
+  url: "https://thulaptophcm.vn",
   telephone: "0965476598",
   priceRange: "$$",
   address: {

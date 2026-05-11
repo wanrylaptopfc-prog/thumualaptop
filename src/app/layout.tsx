@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import FloatingContact from "@/components/FloatingContact";
 
 const GTM_ID = "GTM-MWMLRPDR";
-const BASE_URL = "https://laptopwanry.com";
+const BASE_URL = "https://thulaptophcm.vn";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

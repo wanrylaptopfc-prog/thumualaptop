@@ -101,7 +101,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="border-t border-zinc-100 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-sm text-zinc-400">© 2024 LaptopWanry.com — Tất cả quyền được bảo lưu.</p>
+          <p className="text-sm text-zinc-400">© 2025 thulaptophcm.vn — Tất cả quyền được bảo lưu.</p>
           <p className="text-sm text-zinc-400">Thiết kế bởi LaptopWanry</p>
         </div>
       </div>
