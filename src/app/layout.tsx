@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import FloatingContact from "@/components/FloatingContact";
 
 export const metadata: Metadata = {
   title: "Thu Mua Laptop Cũ Giá Cao Tại TP.HCM | LaptopWanry",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="min-h-dvh flex flex-col" suppressHydrationWarning>
         <Header />
         <main className="flex-1">{children}</main>
+        <FloatingContact />
       </body>
     </html>
   );

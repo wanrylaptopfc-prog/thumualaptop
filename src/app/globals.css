@@ -201,7 +201,7 @@ body {
   padding: 0 16px;
   border-radius: 12px;
   border: 1px solid #e4e4e7;
-  font-size: 14px;
+  font-size: 16px; /* 16px prevents iOS zoom on focus */
   color: #18181b;
   background: #fff;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -220,7 +220,7 @@ body {
   padding-right: 40px;
   border-radius: 12px;
   border: 1px solid #e4e4e7;
-  font-size: 14px;
+  font-size: 16px; /* 16px prevents iOS zoom on focus */
   color: #18181b;
   background: #fff;
   appearance: none;
@@ -234,4 +234,26 @@ body {
   outline: none;
   border-color: #f59e0b;
   box-shadow: 0 0 0 1px #f59e0b;
+}
+
+/* Refine font-size on larger screens */
+@media (min-width: 640px) {
+  .form-input,
+  .form-select {
+    font-size: 14px;
+  }
+}
+
+/* ══════════════════════════════════════
+   Floating Contact Widget Animations
+   ══════════════════════════════════════ */
+
+@keyframes fab-ping {
+  0%   { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.8); }
+}
+
+@keyframes float-item-in {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }

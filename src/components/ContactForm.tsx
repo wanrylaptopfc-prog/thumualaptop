@@ -212,26 +212,26 @@ export default function ContactForm() {
                 <input type="text" required placeholder="Ví dụ: Dell XPS 13 9300" className="form-input" value={productName} onChange={(e) => setProductName(e.target.value)} />
               </Field>
 
-              <Field label="CPU" required>
+              <Field label="CPU" hint="không bắt buộc">
                 <Dropdown options={CPUS} placeholder="Vui lòng chọn" value={cpu} onChange={setCpu} />
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="RAM" required><Dropdown options={RAMS} placeholder="Vui lòng chọn" value={ram} onChange={setRam} /></Field>
-                <Field label="Ổ cứng" required><Dropdown options={STORAGES} placeholder="Vui lòng chọn" value={storage} onChange={setStorage} /></Field>
+                <Field label="RAM" hint="không bắt buộc"><Dropdown options={RAMS} placeholder="Vui lòng chọn" value={ram} onChange={setRam} /></Field>
+                <Field label="Ổ cứng" hint="không bắt buộc"><Dropdown options={STORAGES} placeholder="Vui lòng chọn" value={storage} onChange={setStorage} /></Field>
               </div>
 
-              <Field label="Loại ổ cứng" required>
+              <Field label="Loại ổ cứng" hint="không bắt buộc">
                 <Dropdown options={STORAGE_TYPES} placeholder="Vui lòng chọn" value={storageType} onChange={setStorageType} />
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Màn hình" required><Dropdown options={SCREENS} placeholder="Vui lòng chọn" value={screen} onChange={setScreen} /></Field>
-                <Field label="Độ phân giải" required><Dropdown options={RESOLUTIONS} placeholder="Vui lòng chọn" value={resolution} onChange={setResolution} /></Field>
+                <Field label="Màn hình" hint="không bắt buộc"><Dropdown options={SCREENS} placeholder="Vui lòng chọn" value={screen} onChange={setScreen} /></Field>
+                <Field label="Độ phân giải" hint="không bắt buộc"><Dropdown options={RESOLUTIONS} placeholder="Vui lòng chọn" value={resolution} onChange={setResolution} /></Field>
               </div>
 
-              <Field label="Card màn hình" required>
-                <input type="text" required placeholder="Ví dụ: Nvidia GTX 4050 6GB" className="form-input" value={gpu} onChange={(e) => setGpu(e.target.value)} />
+              <Field label="Card màn hình" hint="không bắt buộc">
+                <input type="text" placeholder="Ví dụ: Nvidia GTX 4050 6GB" className="form-input" value={gpu} onChange={(e) => setGpu(e.target.value)} />
               </Field>
 
               <Field label="Tính năng" hint="không bắt buộc">
@@ -251,7 +251,7 @@ export default function ContactForm() {
                 </div>
               </Field>
 
-              <Field label="Tình trạng - Ngoại hình" required>
+              <Field label="Tình trạng - Ngoại hình" hint="không bắt buộc">
                 <Dropdown options={CONDITIONS} placeholder="Vui lòng chọn" value={condition} onChange={setCondition} />
               </Field>
 
