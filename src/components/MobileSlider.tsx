@@ -44,6 +44,7 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
     <div className={`sm:hidden ${className}`}>
       <div
         className="overflow-hidden"
+        style={{ touchAction: "pan-y" }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
