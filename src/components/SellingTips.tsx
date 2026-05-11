@@ -6,7 +6,6 @@ import {
   UserMinusIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import MobileSlider from "./MobileSlider";
 
 const TIPS = [
   { icon: SparklesIcon, tip: "Vệ sinh máy sạch sẽ — máy sạch được đánh giá tâm lý cao hơn" },
@@ -16,15 +15,6 @@ const TIPS = [
   { icon: UserMinusIcon, tip: "Gỡ tài khoản iCloud (MacBook) hoặc Microsoft trước khi bán" },
   { icon: ClockIcon, tip: "Bán sớm trước khi có thế hệ chip mới — tránh mất giá 15–25%/năm" },
 ];
-
-function TipCard({ t }: { t: (typeof TIPS)[number] }) {
-  return (
-    <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50/50 border border-amber-100">
-      <t.icon className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />
-      <p className="text-sm text-zinc-600 leading-relaxed">{t.tip}</p>
-    </div>
-  );
-}
 
 export default function SellingTips() {
   return (
@@ -39,11 +29,7 @@ export default function SellingTips() {
           </p>
         </div>
 
-        <MobileSlider>
-          {TIPS.map((t, i) => <TipCard key={i} t={t} />)}
-        </MobileSlider>
-
-        <div className="hidden sm:grid max-w-3xl mx-auto sm:grid-cols-2 gap-3">
+        <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
           {TIPS.map((t, i) => (
             <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-amber-50/50 border border-amber-100">
               <t.icon className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />

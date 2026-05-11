@@ -6,7 +6,6 @@ import {
   PaintBrushIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/outline";
-import MobileSlider from "./MobileSlider";
 
 const SERVICES = [
   {
@@ -81,27 +80,6 @@ const SERVICES = [
   },
 ];
 
-function Card({ svc }: { svc: (typeof SERVICES)[number] }) {
-  return (
-    <div className="rounded-2xl border border-zinc-200 p-5">
-      <div className="flex items-center gap-3 mb-4">
-        <div className={`w-10 h-10 rounded-xl ${svc.color} flex items-center justify-center`}>
-          <svc.icon className="w-5 h-5" strokeWidth={1.5} />
-        </div>
-        <h3 className="text-base font-semibold text-zinc-900">{svc.title}</h3>
-      </div>
-      <div className="space-y-0">
-        {svc.brands.map((b, i) => (
-          <div key={i} className={`flex items-center gap-2.5 py-2 ${i !== svc.brands.length - 1 ? "border-b border-zinc-50" : ""}`}>
-            <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
-            <span className="text-sm text-zinc-500">{b}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function Categories() {
   return (
     <section id="dich-vu" className="py-10 sm:py-14 bg-white">
@@ -115,11 +93,7 @@ export default function Categories() {
           </p>
         </div>
 
-        <MobileSlider>
-          {SERVICES.map((svc) => <Card key={svc.title} svc={svc} />)}
-        </MobileSlider>
-
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {SERVICES.map((svc) => (
             <div key={svc.title} className="rounded-2xl border border-zinc-200 hover:border-amber-200 transition-colors p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-4">

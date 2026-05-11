@@ -11,7 +11,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import MobileSlider from "./MobileSlider";
 
 const POLICIES = [
   { icon: TruckIcon, title: "Thu mua tận nơi", desc: "Hỗ trợ thu mua laptop tại nhà, văn phòng trong TP.HCM. Không cần mang máy đến cửa hàng.", img: "/img/THU-MUA-GIA-CAO-7.jpg" },
@@ -20,23 +19,6 @@ const POLICIES = [
   { icon: ArrowPathIcon, title: "Thu cũ đổi mới", desc: "Thu laptop cũ giá cao để lên đời máy mới ngay tại cửa hàng.", img: "/img/THU-MUA-GIA-CAO.jpg" },
   { icon: TicketIcon, title: "Tặng voucher 500K", desc: "Phiếu mua hàng 500.000đ áp dụng cho lần mua laptop tiếp theo.", img: "/img/THU-MUA-GIA-CAO-6.jpg" },
 ];
-
-function PolicyCard({ p }: { p: (typeof POLICIES)[number] }) {
-  return (
-    <div className="rounded-2xl overflow-hidden border border-zinc-200">
-      <div className="aspect-[4/3] overflow-hidden">
-        <Image src={p.img} alt={p.title} width={360} height={270} className="w-full h-full object-cover" />
-      </div>
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <p.icon className="w-5 h-5 text-amber-500 shrink-0" strokeWidth={1.5} />
-          <h3 className="text-base font-semibold text-zinc-900">{p.title}</h3>
-        </div>
-        <p className="text-xs text-zinc-400 leading-relaxed">{p.desc}</p>
-      </div>
-    </div>
-  );
-}
 
 export default function Policies() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -75,12 +57,25 @@ export default function Policies() {
           </div>
         </div>
 
-        {/* Mobile: Transform-based slider */}
-        <MobileSlider>
-          {POLICIES.map((p) => <PolicyCard key={p.title} p={p} />)}
-        </MobileSlider>
+        {/* Mobile: Stacked vertically */}
+        <div className="sm:hidden grid grid-cols-1 gap-4">
+          {POLICIES.map((p) => (
+            <div key={p.title} className="rounded-2xl overflow-hidden border border-zinc-200">
+              <div className="aspect-[16/9] overflow-hidden">
+                <Image src={p.img} alt={p.title} width={360} height={200} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <p.icon className="w-5 h-5 text-amber-500 shrink-0" strokeWidth={1.5} />
+                  <h3 className="text-base font-semibold text-zinc-900">{p.title}</h3>
+                </div>
+                <p className="text-xs text-zinc-400 leading-relaxed">{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        {/* Desktop: Horizontal scroll slider */}
+        {/* Desktop: Horizontal slider */}
         <div className="hidden sm:block">
           <div
             ref={scrollRef}

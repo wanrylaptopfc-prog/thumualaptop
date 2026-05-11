@@ -6,7 +6,6 @@ import {
   ComputerDesktopIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
-import MobileSlider from "./MobileSlider";
 
 const FACTORS = [
   { icon: DevicePhoneMobileIcon, title: "Ngoại hình máy", desc: "Phân loại 5 cấp: New Seal → Like New → 99% → 95% → Dưới 90%. Máy đẹp = giá cao hơn đáng kể." },
@@ -16,20 +15,6 @@ const FACTORS = [
   { icon: ComputerDesktopIcon, title: "Màn hình", desc: "Màn OLED, 2K, 4K hoặc tần số 144Hz+ được định giá cao hơn hẳn so với FHD thông thường." },
   { icon: WrenchScrewdriverIcon, title: "Phụ kiện đi kèm", desc: "Sạc zin: +200–500K. Hộp gốc: +100–300K. Phụ kiện đầy đủ giúp tăng giá đáng kể." },
 ];
-
-function Card({ f }: { f: (typeof FACTORS)[number] }) {
-  return (
-    <div className="flex gap-4 p-5 rounded-2xl border border-zinc-200">
-      <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
-        <f.icon className="w-5 h-5 text-amber-500" strokeWidth={1.5} />
-      </div>
-      <div>
-        <h3 className="text-sm font-semibold text-zinc-900 mb-1">{f.title}</h3>
-        <p className="text-xs text-zinc-400 leading-relaxed">{f.desc}</p>
-      </div>
-    </div>
-  );
-}
 
 export default function PriceFactors() {
   return (
@@ -44,11 +29,7 @@ export default function PriceFactors() {
           </p>
         </div>
 
-        <MobileSlider>
-          {FACTORS.map((f) => <Card key={f.title} f={f} />)}
-        </MobileSlider>
-
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {FACTORS.map((f) => (
             <div key={f.title} className="flex gap-4 p-5 rounded-2xl border border-zinc-200 hover:border-amber-200 transition-colors">
               <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
