@@ -20,21 +20,22 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
   const locked = useRef<"h" | "v" | null>(null);
   const isDragging = useRef(false);
 
-  // Keep activeRef in sync
   useEffect(() => {
     activeRef.current = active;
   }, [active]);
 
   const goTo = useCallback(
     (i: number) => {
-      const next = Math.max(0, Math.min(count - 1, i));
+      // Infinite loop: wrap around
+      let next = i;
+      if (next < 0) next = count - 1;
+      if (next >= count) next = 0;
       activeRef.current = next;
       setActive(next);
     },
     [count],
   );
 
-  // Attach non-passive touch listeners directly on the DOM element
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -45,11 +46,7 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
       deltaX.current = 0;
       locked.current = null;
       isDragging.current = true;
-
-      // Remove transition for instant feedback
-      if (trackRef.current) {
-        trackRef.current.style.transition = "none";
-      }
+      if (trackRef.current) trackRef.current.style.transition = "none";
     };
 
     const onMove = (e: TouchEvent) => {
@@ -58,23 +55,18 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
       const dx = e.touches[0].clientX - startX.current;
       const dy = e.touches[0].clientY - startY.current;
 
-      // Determine direction on first significant movement (8px threshold)
       if (locked.current === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
         locked.current = Math.abs(dx) >= Math.abs(dy) ? "h" : "v";
       }
 
-      // If vertical → let browser scroll, abort our handling
       if (locked.current === "v") return;
 
-      // Horizontal swipe → prevent page scroll, track the finger
       if (locked.current === "h") {
         e.preventDefault();
         deltaX.current = dx;
-
         if (trackRef.current) {
           const base = -(activeRef.current * 100);
-          const pxOffset = dx;
-          trackRef.current.style.transform = `translateX(calc(${base}% + ${pxOffset}px))`;
+          trackRef.current.style.transform = `translateX(calc(${base}% + ${dx}px))`;
         }
       }
     };
@@ -83,10 +75,7 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
       if (!isDragging.current) return;
       isDragging.current = false;
 
-      // Animate to final position
-      if (trackRef.current) {
-        trackRef.current.style.transition = "transform 0.3s ease-out";
-      }
+      if (trackRef.current) trackRef.current.style.transition = "transform 0.3s ease-out";
 
       if (locked.current === "h") {
         if (deltaX.current < -40) {
@@ -104,7 +93,6 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
       locked.current = null;
     };
 
-    // { passive: false } is CRITICAL — allows e.preventDefault() in onMove
     el.addEventListener("touchstart", onStart, { passive: true });
     el.addEventListener("touchmove", onMove, { passive: false });
     el.addEventListener("touchend", onEnd, { passive: true });
@@ -116,7 +104,6 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
     };
   }, [goTo]);
 
-  // Update track position when active changes (from dot clicks or swipes)
   useEffect(() => {
     if (trackRef.current) {
       trackRef.current.style.transition = "transform 0.3s ease-out";
@@ -136,7 +123,6 @@ export default function MobileSlider({ children, className = "" }: MobileSliderP
         </div>
       </div>
 
-      {/* Pagination dots */}
       <div className="flex justify-center gap-1.5 mt-5">
         {Array.from({ length: count }).map((_, i) => (
           <button

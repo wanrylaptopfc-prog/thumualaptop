@@ -173,14 +173,13 @@ export default function FloatingContact() {
   return (
     <div
       id="floating-contact-widget"
-      className="fixed bottom-6 right-5 md:bottom-16 md:right-6 lg:bottom-20 lg:right-8 z-[9999] flex flex-col items-end gap-3"
-      style={{ pointerEvents: "auto" }}
+      className="fixed bottom-6 right-5 md:bottom-16 md:right-6 lg:bottom-20 lg:right-8 z-[9999] flex flex-col items-end gap-3 pointer-events-none"
     >
       {/* ── Expanded Menu ── */}
       <div
         className={`flex flex-col gap-2.5 transition-all duration-300 origin-bottom-right ${
           open
-            ? "opacity-100 translate-y-0 scale-100"
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
             : "opacity-0 translate-y-3 scale-95 pointer-events-none"
         }`}
       >
@@ -228,7 +227,7 @@ export default function FloatingContact() {
       {/* ── Main FAB Button ── */}
       <button
         onClick={() => setOpen(!open)}
-        className={`group relative w-14 h-14 rounded-full shadow-xl transition-all duration-300 flex items-center justify-center ${
+        className={`pointer-events-auto group relative w-14 h-14 rounded-full shadow-xl transition-all duration-300 flex items-center justify-center ${
           open
             ? "bg-zinc-800 hover:bg-zinc-700 shadow-zinc-800/30 rotate-0"
             : "bg-amber-500 hover:bg-amber-600 shadow-amber-500/40 hover:shadow-amber-500/50"
