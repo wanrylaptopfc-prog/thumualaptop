@@ -22,17 +22,24 @@ function Dropdown({ options, placeholder, value, onChange }: { options: string[]
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    if (!open) return;
+    const handler = (e: MouseEvent | TouchEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
     document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+    document.addEventListener("touchstart", handler, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
+  }, [open]);
 
   return (
     <div ref={ref} className="relative">
       <button
         type="button"
-        onClick={() => setOpen(!open)}
-        className={`w-full h-11 px-4 rounded-xl border text-left text-sm flex items-center justify-between transition-colors ${
+        onPointerUp={(e) => { e.preventDefault(); setOpen(!open); }}
+        className={`w-full h-12 sm:h-11 px-4 rounded-xl border text-left text-sm flex items-center justify-between transition-colors cursor-pointer select-none ${
           open ? "border-amber-400 ring-1 ring-amber-400" : "border-zinc-200"
         } ${value ? "text-zinc-900" : "text-zinc-400"}`}
       >
@@ -46,9 +53,9 @@ function Dropdown({ options, placeholder, value, onChange }: { options: string[]
             <button
               key={opt}
               type="button"
-              onClick={() => { onChange(opt); setOpen(false); }}
-              className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                value === opt ? "bg-amber-50 text-amber-600 font-medium" : "text-zinc-700 hover:bg-zinc-50"
+              onPointerUp={() => { onChange(opt); setOpen(false); }}
+              className={`w-full text-left px-4 py-3 sm:py-2.5 text-sm transition-colors cursor-pointer select-none ${
+                value === opt ? "bg-amber-50 text-amber-600 font-medium" : "text-zinc-700 hover:bg-zinc-50 active:bg-zinc-100"
               }`}
             >
               {opt}
