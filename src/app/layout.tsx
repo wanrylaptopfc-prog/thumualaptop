@@ -10,8 +10,8 @@ const BASE_URL = "https://thulaptophcm.vn";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Thu Mua Laptop Cũ Giá Cao Tại TP.HCM | LaptopWanry",
-    template: "%s | LaptopWanry",
+    default: "Thu Mua Laptop Cũ Giá Cao Tại TP.HCM | Thu Laptop HCM",
+    template: "%s | Thu Laptop HCM",
   },
   description:
     "LaptopWanry chuyên thu mua laptop cũ giá cao, không ép giá, thu tất cả các dòng. Thanh toán nhanh, tận nơi tại TP.HCM. Hotline: 0965 476 598",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     url: BASE_URL,
     siteName: "LaptopWanry",
-    title: "Thu Mua Laptop Cũ Giá Cao #1 TP.HCM | LaptopWanry",
+    title: "Thu Mua Laptop Cũ Giá Cao #1 TP.HCM | Thu Laptop HCM",
     description:
       "Chuyên thu mua laptop cũ giá cao, không ép giá, thanh toán nhanh tận nơi tại TP.HCM. Hotline: 0965 476 598",
     images: [
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thu Mua Laptop Cũ Giá Cao #1 TP.HCM | LaptopWanry",
+    title: "Thu Mua Laptop Cũ Giá Cao #1 TP.HCM | Thu Laptop HCM",
     description:
       "Chuyên thu mua laptop cũ giá cao, không ép giá, thanh toán nhanh tận nơi tại TP.HCM.",
     images: ["/img/THU-MUA-GIA-CAO-6.jpg"],
